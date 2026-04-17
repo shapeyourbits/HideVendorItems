@@ -1,5 +1,11 @@
 local _, ns = ...
 
+if ns.CATEGORIES and ns.CATEGORY_LABELS then
+    table.sort(ns.CATEGORIES, function(a, b)
+        return (ns.CATEGORY_LABELS[a] or a) < (ns.CATEGORY_LABELS[b] or b)
+    end)
+end
+
 local function getElvUI()
     if not (C_AddOns and C_AddOns.IsAddOnLoaded and C_AddOns.IsAddOnLoaded("ElvUI")) then
         return nil, nil
