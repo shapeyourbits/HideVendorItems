@@ -1,9 +1,9 @@
 ## Interface: 120001
-## Title: WowHideThings
+## Title: Hide Vendor Items
 ## Notes: Hide vendor items you already own; filter vendor list by category.
 ## Author: ShapeYourBits
-## Version: 1.0.1
-## SavedVariablesPerCharacter: WowHideThingsDB
+## Version: 1.0.2
+## SavedVariablesPerCharacter: HideVendorItemsDB
 ## IconTexture: Interface\Icons\inv_misc_bag_10
 
 Core.lua

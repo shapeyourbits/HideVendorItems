@@ -26,6 +26,14 @@ function Filter.Build()
         return cache
     end
 
+    local anyCategoryTicked = false
+    for _, key in ipairs(ns.CATEGORIES) do
+        if db.visibleCategories[key] then
+            anyCategoryTicked = true
+            break
+        end
+    end
+
     local n = GetMerchantNumItems() or 0
     for i = 1, n do
         local link = GetMerchantItemLink(i)
@@ -39,7 +47,7 @@ function Filter.Build()
         if itemID then
             local cat, owned = ns.Detection.Classify(itemID, link)
             if cat then
-                if not db.visibleCategories[cat] then
+                if anyCategoryTicked and not db.visibleCategories[cat] then
                     include = false
                 elseif db.hideOwned and owned then
                     include = false

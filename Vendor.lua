@@ -91,9 +91,9 @@ local function installWrappers()
     end
 
     local function wrapTooltipSetMerchant(tooltip)
-        if not tooltip or not tooltip.SetMerchantItem or tooltip.WHT_wrappedSetMerchantItem then return end
+        if not tooltip or not tooltip.SetMerchantItem or tooltip.HVI_wrappedSetMerchantItem then return end
         local o = tooltip.SetMerchantItem
-        tooltip.WHT_wrappedSetMerchantItem = true
+        tooltip.HVI_wrappedSetMerchantItem = true
         tooltip.SetMerchantItem = function(self, i, ...)
             if isRemapActive() then
                 local r = filtered[i]
@@ -136,14 +136,14 @@ local function rebuild()
     if ok then
         filtered = result or {}
     else
-        print("|cffff5555WHT|r Build error: " .. tostring(result))
+        print("|cffff5555HVI|r Build error: " .. tostring(result))
     end
     active = true
 end
 
 function Vendor.DebugDump(onlyIndex)
     local n = orig.GetMerchantNumItems and orig.GetMerchantNumItems() or 0
-    print(("|cff99ccffWHT|r state: active=%s  shown=%s  tab=%s  #filtered=%d  hideOwned=%s"):format(
+    print(("|cff99ccffHVI|r state: active=%s  shown=%s  tab=%s  #filtered=%d  hideOwned=%s"):format(
         tostring(active),
         tostring(MerchantFrame and MerchantFrame:IsShown()),
         tostring(MerchantFrame and MerchantFrame.selectedTab),
@@ -157,7 +157,7 @@ function Vendor.DebugDump(onlyIndex)
         end
         print("  visibleCategories: " .. table.concat(parts, ", "))
     end
-    print(("|cff99ccffWHT|r: %d unfiltered merchant items"):format(n))
+    print(("|cff99ccffHVI|r: %d unfiltered merchant items"):format(n))
     for i = 1, n do
         if not onlyIndex or onlyIndex == i then
             local link = orig.GetMerchantItemLink and orig.GetMerchantItemLink(i)

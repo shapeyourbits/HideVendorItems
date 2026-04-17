@@ -1,6 +1,6 @@
 local addonName, ns = ...
 
-WowHideThings = ns
+HideVendorItems = ns
 ns.name = addonName
 
 ns.CATEGORIES = { "equipment", "pets", "mounts", "costume", "toys", "housing", "recipes" }
@@ -17,13 +17,13 @@ ns.CATEGORY_LABELS = {
 local DEFAULTS = {
     hideOwned = true,
     visibleCategories = {
-        equipment = true,
-        pets      = true,
-        mounts    = true,
-        costume   = true,
-        toys      = true,
-        housing   = true,
-        recipes   = true,
+        equipment = false,
+        pets      = false,
+        mounts    = false,
+        costume   = false,
+        toys      = false,
+        housing   = false,
+        recipes   = false,
     },
 }
 
@@ -46,8 +46,8 @@ function ns.FireSettingsChanged()
     for _, fn in ipairs(callbacks) do fn() end
 end
 
-SLASH_WOWHIDETHINGS1 = "/wht"
-SlashCmdList["WOWHIDETHINGS"] = function(msg)
+SLASH_HIDEVENDORITEMS1 = "/HVI"
+SlashCmdList["HIDEVENDORITEMS"] = function(msg)
     msg = (msg or ""):lower():gsub("^%s+", ""):gsub("%s+$", "")
     local cmd, arg = msg:match("^(%S+)%s*(%S*)$")
     if cmd == "debug" then
@@ -56,9 +56,9 @@ SlashCmdList["WOWHIDETHINGS"] = function(msg)
             ns.Vendor.DebugDump(idx)
         end
     else
-        print("WHT commands:")
-        print("  /wht debug       - dump classification for every merchant slot")
-        print("  /wht debug <n>   - dump slot n plus its full tooltip data")
+        print("HVI commands:")
+        print("  /HVI debug       - dump classification for every merchant slot")
+        print("  /HVI debug <n>   - dump slot n plus its full tooltip data")
     end
 end
 
@@ -66,8 +66,8 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(_, event, arg1)
     if event == "ADDON_LOADED" and arg1 == addonName then
-        WowHideThingsDB = WowHideThingsDB or {}
-        applyDefaults(WowHideThingsDB, DEFAULTS)
-        ns.db = WowHideThingsDB
+        HideVendorItemsDB = HideVendorItemsDB or {}
+        applyDefaults(HideVendorItemsDB, DEFAULTS)
+        ns.db = HideVendorItemsDB
     end
 end)

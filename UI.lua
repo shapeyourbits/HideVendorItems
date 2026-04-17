@@ -7,9 +7,9 @@ local function onSettingChanged()
 end
 
 local function buildUI()
-    if not MerchantFrame or _G.WHTHideOwnedCheck or _G.WHTHeader then return end
+    if not MerchantFrame or _G.HVIHideOwnedCheck or _G.HVIHeader then return end
 
-    local header = CreateFrame("Frame", "WHTHeader", MerchantFrame, "BackdropTemplate")
+    local header = CreateFrame("Frame", "HVIHeader", MerchantFrame, "BackdropTemplate")
     header:SetPoint("BOTTOMLEFT", MerchantFrame, "TOPLEFT", 10, -8)
     header:SetPoint("BOTTOMRIGHT", MerchantFrame, "TOPRIGHT", -10, -8)
     header:SetHeight(32)
@@ -22,7 +22,7 @@ local function buildUI()
         insets = { left = 4, right = 4, top = 4, bottom = 4 },
     })
 
-    local check = CreateFrame("CheckButton", "WHTHideOwnedCheck", header, "UICheckButtonTemplate")
+    local check = CreateFrame("CheckButton", "HVIHideOwnedCheck", header, "UICheckButtonTemplate")
     check:SetPoint("LEFT", header, "LEFT", 40, 0)
     check:SetSize(22, 22)
     check.text = check.text or check:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -43,7 +43,7 @@ local function buildUI()
 
     local dropdown
     if WowStyle1DropdownTemplate then
-        dropdown = CreateFrame("DropdownButton", "WHTCategoryDropdown", header, "WowStyle1DropdownTemplate")
+        dropdown = CreateFrame("DropdownButton", "HVICategoryDropdown", header, "WowStyle1DropdownTemplate")
         dropdown:SetPoint("LEFT", check.Text or check.text, "RIGHT", 12, 0)
         dropdown:SetWidth(160)
         dropdown:SetDefaultText("Categories")
@@ -61,7 +61,7 @@ local function buildUI()
             end
         end)
     else
-        dropdown = CreateFrame("Frame", "WHTCategoryDropdown", header, "UIDropDownMenuTemplate")
+        dropdown = CreateFrame("Frame", "HVICategoryDropdown", header, "UIDropDownMenuTemplate")
         dropdown:SetPoint("LEFT", check.Text or check.text, "RIGHT", 0, -2)
         UIDropDownMenu_SetWidth(dropdown, 140)
         UIDropDownMenu_SetText(dropdown, "Categories")
@@ -89,8 +89,8 @@ f:RegisterEvent("MERCHANT_SHOW")
 f:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_LOGIN" or event == "MERCHANT_SHOW" then
         buildUI()
-        if _G.WHTHideOwnedCheck and ns.db then
-            _G.WHTHideOwnedCheck:SetChecked(ns.db.hideOwned)
+        if _G.HVIHideOwnedCheck and ns.db then
+            _G.HVIHideOwnedCheck:SetChecked(ns.db.hideOwned)
         end
     end
 end)
