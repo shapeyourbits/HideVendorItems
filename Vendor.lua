@@ -216,6 +216,7 @@ function Vendor.Refresh()
         end
         MerchantFrame_Update()
     end
+    if ns.RefreshLabels then ns.RefreshLabels() end
     inRefresh = false
 end
 

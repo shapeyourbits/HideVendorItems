@@ -4,9 +4,14 @@ local Filter = {}
 ns.Filter = Filter
 
 local cache = nil
+local hiddenOwned = 0
 
 function Filter.Invalidate()
     cache = nil
+end
+
+function Filter.GetHiddenOwnedCount()
+    return hiddenOwned
 end
 
 local function itemIDFromLink(link)
@@ -20,6 +25,7 @@ function Filter.Build()
 
     local db = ns.db
     local result = {}
+    hiddenOwned = 0
 
     if not db then
         cache = result
@@ -51,7 +57,10 @@ function Filter.Build()
                     include = false
                 elseif db.hideOwned and owned then
                     include = false
+                    hiddenOwned = hiddenOwned + 1
                 end
+            elseif anyCategoryTicked then
+                include = false
             end
         end
 

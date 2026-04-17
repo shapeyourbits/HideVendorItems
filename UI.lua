@@ -1,5 +1,23 @@
 local _, ns = ...
 
+local function hideKnownLabel()
+    if ns.db and ns.db.hideOwned and ns.Filter and ns.Filter.GetHiddenOwnedCount then
+        local n = ns.Filter.GetHiddenOwnedCount()
+        if n > 0 then
+            return ("Hide Known (%d)"):format(n)
+        end
+    end
+    return "Hide Known"
+end
+
+function ns.RefreshLabels()
+    local check = _G.HVIHideOwnedCheck
+    if not check then return end
+    local label = hideKnownLabel()
+    if check.Text then check.Text:SetText(label) end
+    if check.text then check.text:SetText(label) end
+end
+
 local function onSettingChanged()
     if ns.Filter then ns.Filter.Invalidate() end
     ns.FireSettingsChanged()
@@ -27,10 +45,10 @@ local function buildUI()
     check:SetSize(22, 22)
     check.text = check.text or check:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     if check.Text then
-        check.Text:SetText("Hide owned")
+        check.Text:SetText("Hide Known")
     else
         check.text:SetPoint("LEFT", check, "RIGHT", 2, 0)
-        check.text:SetText("Hide owned")
+        check.text:SetText("Hide Known")
     end
     check:SetScript("OnShow", function(self)
         if ns.db then self:SetChecked(ns.db.hideOwned) end

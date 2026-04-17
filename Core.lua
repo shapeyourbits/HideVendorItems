@@ -8,10 +8,10 @@ ns.CATEGORY_LABELS = {
     equipment = "Equipment",
     pets      = "Pets",
     mounts    = "Mounts",
-    costume   = "Costume",
+    costume   = "Appearances",
     toys      = "Toys",
     housing   = "Housing",
-    recipes   = "Crafting Recipes",
+    recipes   = "Crafting",
 }
 
 local DEFAULTS = {
