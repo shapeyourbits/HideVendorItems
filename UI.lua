@@ -30,7 +30,7 @@ local function buildUI()
     local header = CreateFrame("Frame", "HVIHeader", MerchantFrame, "BackdropTemplate")
     header:SetPoint("BOTTOMLEFT", MerchantFrame, "TOPLEFT", 10, -8)
     header:SetPoint("BOTTOMRIGHT", MerchantFrame, "TOPRIGHT", -10, -8)
-    header:SetHeight(32)
+    header:SetHeight(44)
     header:SetFrameStrata(MerchantFrame:GetFrameStrata())
     header:SetFrameLevel(MerchantFrame:GetFrameLevel() + 1)
     header:SetBackdrop({
@@ -62,9 +62,9 @@ local function buildUI()
     local dropdown
     if WowStyle1DropdownTemplate then
         dropdown = CreateFrame("DropdownButton", "HVICategoryDropdown", header, "WowStyle1DropdownTemplate")
-        dropdown:SetPoint("LEFT", check.Text or check.text, "RIGHT", 12, 0)
-        dropdown:SetWidth(160)
-        dropdown:SetDefaultText("Categories")
+        dropdown:SetPoint("RIGHT", header, "RIGHT", 0, -2)
+        dropdown:SetWidth(120)
+        dropdown:SetDefaultText("Show Only")
         dropdown:SetupMenu(function(_, root)
             for _, key in ipairs(ns.CATEGORIES) do
                 root:CreateCheckbox(
@@ -80,9 +80,9 @@ local function buildUI()
         end)
     else
         dropdown = CreateFrame("Frame", "HVICategoryDropdown", header, "UIDropDownMenuTemplate")
-        dropdown:SetPoint("LEFT", check.Text or check.text, "RIGHT", 0, -2)
-        UIDropDownMenu_SetWidth(dropdown, 140)
-        UIDropDownMenu_SetText(dropdown, "Categories")
+        dropdown:SetPoint("RIGHT", header, "RIGHT", 0, -2)
+        UIDropDownMenu_SetWidth(dropdown, 120)
+        UIDropDownMenu_SetText(dropdown, "Show Only")
         UIDropDownMenu_Initialize(dropdown, function(self, level)
             if not ns.db then return end
             for _, key in ipairs(ns.CATEGORIES) do
