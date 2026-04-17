@@ -1,0 +1,13 @@
+## Interface: 120001
+## Title: WowHideThings
+## Notes: Hide vendor items you already own; filter vendor list by category.
+## Author: ShapeYourBits
+## Version: 1.0.1
+## SavedVariablesPerCharacter: WowHideThingsDB
+## IconTexture: Interface\Icons\inv_misc_bag_10
+
+Core.lua
+Detection.lua
+Filter.lua
+Vendor.lua
+UI.lua
