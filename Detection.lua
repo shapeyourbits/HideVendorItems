@@ -221,22 +221,35 @@ function Detection.Classify(itemID, itemLink)
     end
 
     if isToy(itemID) then
-        return "toys", toyOwned(itemID)
+        local owned = toyOwned(itemID)
+        if not owned and tooltipSaysAlreadyKnown(itemID) then owned = true end
+        return "toys", owned
     end
 
     local species = petSpecies(itemID)
     if species then
-        return "pets", petOwned(species)
+        local owned = petOwned(species)
+        if not owned and tooltipSaysAlreadyKnown(itemID) then owned = true end
+        return "pets", owned
     end
 
     local mount = mountFromItem(itemID)
     if mount then
-        return "mounts", mountOwned(mount)
+        local owned = mountOwned(mount)
+        if not owned and tooltipSaysAlreadyKnown(itemID) then owned = true end
+        return "mounts", owned
     end
 
     local decor = housingLookup(itemID)
     if decor then
-        return "housing", housingOwned(decor)
+        if housingOwned(decor) then
+            return "housing", true
+        end
+        local fromTooltip = housingTooltipFallback(itemID)
+        if fromTooltip ~= nil then
+            return "housing", fromTooltip
+        end
+        return "housing", false
     end
 
     local housingFallback = housingTooltipFallback(itemID)
