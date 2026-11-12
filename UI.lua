@@ -136,20 +136,16 @@ local function buildUI()
                 )
             end
         end)
-        if dropdown.OpenMenu then
+        -- Nudge the menu 5px right/up from its default TOPLEFT->BOTTOMLEFT anchor.
+        if dropdown.SetMenuAnchor and AnchorUtil and AnchorUtil.CreateAnchor then
+            dropdown:SetMenuAnchor(AnchorUtil.CreateAnchor("TOPLEFT", dropdown, "BOTTOMLEFT", 5, 5))
+        elseif dropdown.OpenMenu then
             local origOpenMenu = dropdown.OpenMenu
             dropdown.OpenMenu = function(self, ...)
                 local result = origOpenMenu(self, ...)
-                local f = EnumerateFrames and EnumerateFrames()
-                while f do
-                    if f ~= self and f:IsShown() and f.GetNumPoints and f:GetNumPoints() > 0 then
-                        local _, relativeTo = f:GetPoint(1)
-                        if relativeTo == self and f.AdjustPointsOffset then
-                            f:AdjustPointsOffset(5, 5)
-                            return result
-                        end
-                    end
-                    f = EnumerateFrames(f)
+                local menu = self.menu
+                if menu and menu.AdjustPointsOffset then
+                    menu:AdjustPointsOffset(5, 5)
                 end
                 return result
             end

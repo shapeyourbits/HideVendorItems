@@ -3,7 +3,16 @@ local addonName, ns = ...
 HideVendorItems = ns
 ns.name = addonName
 
+local tocVersion = select(4, GetBuildInfo()) or 0
+ns.IS_FOREVER = tocVersion >= 16000 and tocVersion < 20000
+
 ns.CATEGORIES = { "equipment", "pets", "mounts", "costume", "toys", "housing", "recipes" }
+if ns.IS_FOREVER then
+    -- No player housing in WoW Forever.
+    for i = #ns.CATEGORIES, 1, -1 do
+        if ns.CATEGORIES[i] == "housing" then table.remove(ns.CATEGORIES, i) end
+    end
+end
 ns.CATEGORY_LABELS = {
     equipment = "Equipment",
     pets      = "Pets",
@@ -16,6 +25,7 @@ ns.CATEGORY_LABELS = {
 
 local DEFAULTS = {
     hideOwned = true,
+    trainerHideKnown = true,
     visibleCategories = {
         equipment = false,
         pets      = false,
@@ -55,10 +65,14 @@ SlashCmdList["HIDEVENDORITEMS"] = function(msg)
             local idx = tonumber(arg)
             ns.Vendor.DebugDump(idx)
         end
+    elseif cmd == "trainer" then
+        ns.db.trainerHideKnown = not ns.db.trainerHideKnown
+        print("HVI: trainer default filters " .. (ns.db.trainerHideKnown and "enabled" or "disabled"))
     else
         print("HVI commands:")
         print("  /HVI debug       - dump classification for every merchant slot")
         print("  /HVI debug <n>   - dump slot n plus its full tooltip data")
+        print("  /HVI trainer     - toggle hiding unavailable/known trainer skills by default")
     end
 end
 
